@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="d1.css">
+    <title>D-1</title>
+</head>
+<body>
+    <div class="container">
+        <div class="middle">
+            <div data-key="65" class="key">
+                <kbd>A</kbd>
+                <span class="sound">clap</span>
+            </div>
+
+            <div data-key="66" class="key">
+                <kbd>B</kbd>
+                <span class="sound">hihat</span>
+            </div>
+
+            <div data-key="67" class="key">
+                <kbd>C</kbd>
+                <span class="sound">Thunder</span>
+            </div>
+
+            <div data-key="68" class="key">
+                <kbd>D</kbd>
+                <span class="sound">Kick</span>
+            </div>
+        </div>
+
+        <audio data-key="65" src="./sounds/applause-01.wav"></audio>
+        <audio data-key="66" src="./sounds/drums.wav"></audio>
+        <audio data-key="67" src="./sounds/applause-01.wav"></audio>
+        <audio data-key="68" src="./sounds/applause-01.wav"></audio>
+    </div>
+</body>
+
+<script>
+    
+
+    function playSound(e){
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        if(!audio) return;
+        audio.currentTime = 0;
+        audio.play();
+        console.log(e.keyCode);
+        key.classList.add('playing');
+    }
+
+    function removeTransition(e){
+        if(e.propertyName !== 'transform') return; 
+
+            this.classList.remove('playing');
+    }
+
+    const keys = document.querySelectorAll('.key')
+    keys.forEach(key => key.addEventListener("transitionend", removeTransition));
+    window.addEventListener("keydown", playSound);
+</script>
+</html>
